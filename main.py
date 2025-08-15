@@ -2,12 +2,37 @@
 Main Flask application for the Lyrics Fetcher API.
 """
 import os
+import sys
 from flask import Flask, jsonify, request
-from app.lyrics import get_lyrics
-from app.spotify import get_song_info
-from config.settings import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, GENIUS_ACCESS_TOKEN
+
+# Debug imports
+print(f"🐍 Python version: {sys.version}")
+print(f"📁 Current directory: {os.getcwd()}")
+print("📦 Importing application modules...")
+
+try:
+    from app.lyrics import get_lyrics
+    print("✅ lyrics module imported")
+except ImportError as e:
+    print(f"❌ Error importing lyrics: {e}")
+    raise
+
+try:
+    from app.spotify import get_song_info
+    print("✅ spotify module imported")
+except ImportError as e:
+    print(f"❌ Error importing spotify: {e}")
+    raise
+
+try:
+    from config.settings import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, GENIUS_ACCESS_TOKEN
+    print("✅ settings module imported")
+except ImportError as e:
+    print(f"❌ Error importing settings: {e}")
+    raise
 
 app = Flask(__name__)
+print("✅ Flask app created successfully")
 
 
 @app.route("/", methods=["GET"])
